@@ -1,0 +1,55 @@
+---
+# ServiceAccount for SwiftPay applications
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: swiftpay
+  namespace: swiftpay
+  labels:
+    app: swiftpay
+
+---
+# Role for pod inspection and networking
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: swiftpay-role
+  namespace: swiftpay
+rules:
+- apiGroups: [""]
+  resources: ["pods"]
+  verbs: ["get", "list", "watch"]
+- apiGroups: [""]
+  resources: ["services"]
+  verbs: ["get", "list", "watch"]
+- apiGroups: [""]
+  resources: ["configmaps"]
+  verbs: ["get", "list"]
+
+---
+# RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: swiftpay-rolebinding
+  namespace: swiftpay
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: swiftpay-role
+subjects:
+- kind: ServiceAccount
+  name: swiftpay
+  namespace: swiftpay
+
+---
+# Secret for database password
+apiVersion: v1
+kind: Secret
+metadata:
+  name: db-secret
+  namespace: swiftpay
+type: Opaque
+stringData:
+  password: "swiftpay_password"
+  username: "swiftpay"

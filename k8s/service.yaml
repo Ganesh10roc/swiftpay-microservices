@@ -1,0 +1,79 @@
+---
+# Transaction Gateway Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: transaction-gateway
+  namespace: swiftpay
+  labels:
+    app: transaction-gateway
+spec:
+  type: ClusterIP
+  selector:
+    app: transaction-gateway
+  ports:
+  - name: http
+    port: 8080
+    targetPort: 8080
+    protocol: TCP
+
+---
+# Ledger Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: ledger-service
+  namespace: swiftpay
+  labels:
+    app: ledger-service
+spec:
+  type: ClusterIP
+  selector:
+    app: ledger-service
+  ports:
+  - name: http
+    port: 8081
+    targetPort: 8081
+    protocol: TCP
+
+---
+# Analytics Worker Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: analytics-worker
+  namespace: swiftpay
+  labels:
+    app: analytics-worker
+spec:
+  type: ClusterIP
+  selector:
+    app: analytics-worker
+  ports:
+  - name: http
+    port: 8082
+    targetPort: 8082
+    protocol: TCP
+
+---
+# API Gateway / Ingress Service (LoadBalancer)
+apiVersion: v1
+kind: Service
+metadata:
+  name: swiftpay-api-gateway
+  namespace: swiftpay
+  labels:
+    app: api-gateway
+spec:
+  type: LoadBalancer
+  selector:
+    app: transaction-gateway
+  ports:
+  - name: http
+    port: 80
+    targetPort: 8080
+    protocol: TCP
+  - name: https
+    port: 443
+    targetPort: 8080
+    protocol: TCP

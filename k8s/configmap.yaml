@@ -1,0 +1,38 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: swiftpay-config
+  namespace: swiftpay
+data:
+  SPRING_DATASOURCE_URL: "jdbc:postgresql://postgres:5432/swiftpay"
+  SPRING_DATASOURCE_USERNAME: "swiftpay"
+  SPRING_KAFKA_BOOTSTRAP_SERVERS: "kafka:29092"
+  SPRING_REDIS_HOST: "redis"
+  SPRING_REDIS_PORT: "6379"
+  JAVA_OPTS: "-Xmx512m -Xms256m"
+  LOGGING_LEVEL_ROOT: "INFO"
+  LOGGING_LEVEL_COM_SWIFTPAY: "DEBUG"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgres-init
+  namespace: swiftpay
+data:
+  init.sql: |
+    CREATE TABLE IF NOT EXISTS transactions (
+      id BIGSERIAL PRIMARY KEY,
+      transaction_id VARCHAR(36) UNIQUE NOT NULL,
+      sender_id VARCHAR(100) NOT NULL,
+      receiver_id VARCHAR(100) NOT NULL,
+      amount NUMERIC(19, 2) NOT NULL,
+      currency VARCHAR(3) NOT NULL,
+      status VARCHAR(20) NOT NULL,
+      idempotency_key VARCHAR(100),
+      created_at TIMESTAMP NOT NULL,
+      updated_at TIMESTAMP,
+      error_reason TEXT
+    );
+    CREATE INDEX IF NOT EXISTS idx_transaction_id ON transactions(transaction_id);
+    CREATE INDEX IF NOT EXISTS idx_sender_id ON transactions(sender_id);
+    CREATE INDEX IF NOT EXISTS idx_status ON transactions(status);
