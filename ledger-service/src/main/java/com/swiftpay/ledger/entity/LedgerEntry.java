@@ -59,6 +59,27 @@ public class LedgerEntry {
         createdAt = LocalDateTime.now();
     }
 
+    public Long getId() { return this.id; }
+    public void setId(Long id) { this.id = id; }
+    public String getTransactionId() { return this.transactionId; }
+    public void setTransactionId(String transactionId) { this.transactionId = transactionId; }
+    public String getUserId() { return this.userId; }
+    public void setUserId(String userId) { this.userId = userId; }
+    public Long getAccountId() { return this.accountId; }
+    public void setAccountId(Long accountId) { this.accountId = accountId; }
+    public BigDecimal getDebit() { return this.debit; }
+    public void setDebit(BigDecimal debit) { this.debit = debit; }
+    public BigDecimal getCredit() { return this.credit; }
+    public void setCredit(BigDecimal credit) { this.credit = credit; }
+    public BigDecimal getBalanceAfter() { return this.balanceAfter; }
+    public void setBalanceAfter(BigDecimal balanceAfter) { this.balanceAfter = balanceAfter; }
+    public TransactionStatus getStatus() { return this.status; }
+    public void setStatus(TransactionStatus status) { this.status = status; }
+    public String getDescription() { return this.description; }
+    public void setDescription(String description) { this.description = description; }
+    public LocalDateTime getCreatedAt() { return this.createdAt; }
+    public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
+
     public static LedgerEntryBuilder builder() {
         return new LedgerEntryBuilder();
     }
