@@ -22,7 +22,6 @@ public class AnalyticsController {
     private static final DateTimeFormatter dateFormatter = DateTimeFormatter.ISO_DATE_TIME;
 
     @GetMapping("/metrics/hour")
-    @Operation(summary = "Get metrics for last hour", description = "Retrieve transaction metrics for the last hour")
     public ResponseEntity<ApiResponse<AnalyticsMetrics>> getLastHourMetrics() {
         try {
             AnalyticsMetrics metrics = analyticsService.getMetricsForLastHour();
@@ -35,7 +34,6 @@ public class AnalyticsController {
     }
 
     @GetMapping("/metrics/day")
-    @Operation(summary = "Get metrics for last day", description = "Retrieve transaction metrics for the last day")
     public ResponseEntity<ApiResponse<AnalyticsMetrics>> getLastDayMetrics() {
         try {
             AnalyticsMetrics metrics = analyticsService.getMetricsForLastDay();
@@ -48,7 +46,6 @@ public class AnalyticsController {
     }
 
     @GetMapping("/metrics")
-    @Operation(summary = "Get metrics for time period", description = "Retrieve metrics for a custom time period")
     public ResponseEntity<ApiResponse<AnalyticsMetrics>> getMetricsForPeriod(
             @RequestParam String startTime,
             @RequestParam String endTime) {
