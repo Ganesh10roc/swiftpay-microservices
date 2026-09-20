@@ -54,4 +54,46 @@ public class Account {
     protected void onUpdate() {
         updatedAt = LocalDateTime.now();
     }
+
+    public BigDecimal getBalance() {
+        return this.balance;
+    }
+
+    public Long getId() {
+        return this.id;
+    }
+
+    public static AccountBuilder builder() {
+        return new AccountBuilder();
+    }
+
+    public static class AccountBuilder {
+        private Long id;
+        private String userId;
+        private BigDecimal balance;
+        private String currency;
+        private Long version;
+        private LocalDateTime createdAt;
+        private LocalDateTime updatedAt;
+
+        public AccountBuilder id(Long id) { this.id = id; return this; }
+        public AccountBuilder userId(String userId) { this.userId = userId; return this; }
+        public AccountBuilder balance(BigDecimal balance) { this.balance = balance; return this; }
+        public AccountBuilder currency(String currency) { this.currency = currency; return this; }
+        public AccountBuilder version(Long version) { this.version = version; return this; }
+        public AccountBuilder createdAt(LocalDateTime createdAt) { this.createdAt = createdAt; return this; }
+        public AccountBuilder updatedAt(LocalDateTime updatedAt) { this.updatedAt = updatedAt; return this; }
+
+        public Account build() {
+            Account account = new Account();
+            account.id = this.id;
+            account.userId = this.userId;
+            account.balance = this.balance;
+            account.currency = this.currency;
+            account.version = this.version;
+            account.createdAt = this.createdAt;
+            account.updatedAt = this.updatedAt;
+            return account;
+        }
+    }
 }

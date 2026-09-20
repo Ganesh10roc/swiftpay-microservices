@@ -58,4 +58,47 @@ public class LedgerEntry {
     protected void onCreate() {
         createdAt = LocalDateTime.now();
     }
+
+    public static LedgerEntryBuilder builder() {
+        return new LedgerEntryBuilder();
+    }
+
+    public static class LedgerEntryBuilder {
+        private Long id;
+        private String transactionId;
+        private String userId;
+        private Long accountId;
+        private BigDecimal debit;
+        private BigDecimal credit;
+        private BigDecimal balanceAfter;
+        private TransactionStatus status;
+        private String description;
+        private LocalDateTime createdAt;
+
+        public LedgerEntryBuilder id(Long id) { this.id = id; return this; }
+        public LedgerEntryBuilder transactionId(String transactionId) { this.transactionId = transactionId; return this; }
+        public LedgerEntryBuilder userId(String userId) { this.userId = userId; return this; }
+        public LedgerEntryBuilder accountId(Long accountId) { this.accountId = accountId; return this; }
+        public LedgerEntryBuilder debit(BigDecimal debit) { this.debit = debit; return this; }
+        public LedgerEntryBuilder credit(BigDecimal credit) { this.credit = credit; return this; }
+        public LedgerEntryBuilder balanceAfter(BigDecimal balanceAfter) { this.balanceAfter = balanceAfter; return this; }
+        public LedgerEntryBuilder status(TransactionStatus status) { this.status = status; return this; }
+        public LedgerEntryBuilder description(String description) { this.description = description; return this; }
+        public LedgerEntryBuilder createdAt(LocalDateTime createdAt) { this.createdAt = createdAt; return this; }
+
+        public LedgerEntry build() {
+            LedgerEntry entry = new LedgerEntry();
+            entry.id = this.id;
+            entry.transactionId = this.transactionId;
+            entry.userId = this.userId;
+            entry.accountId = this.accountId;
+            entry.debit = this.debit;
+            entry.credit = this.credit;
+            entry.balanceAfter = this.balanceAfter;
+            entry.status = this.status;
+            entry.description = this.description;
+            entry.createdAt = this.createdAt;
+            return entry;
+        }
+    }
 }
