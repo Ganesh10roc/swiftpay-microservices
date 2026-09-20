@@ -20,7 +20,7 @@ public class PaymentEventListener {
     private final LedgerService ledgerService;
 
     @RetryableTopic(
-            attempts = 4,
+            attempts = "4",
             backoff = @Backoff(delay = 1000, multiplier = 2.0, maxDelay = 10000),
             topicSuffixingStrategy = TopicSuffixingStrategy.SUFFIX_WITH_INDEX_VALUE
     )
