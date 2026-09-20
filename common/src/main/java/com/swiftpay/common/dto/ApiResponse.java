@@ -47,7 +47,7 @@ public class ApiResponse<T> {
     public LocalDateTime getTimestamp() { return this.timestamp; }
     public void setTimestamp(LocalDateTime timestamp) { this.timestamp = timestamp; }
 
-    public static <T> ApiResponse<T> builder() {
+    public static <T> ApiResponseBuilder<T> builder() {
         return new ApiResponseBuilder<>();
     }
 
