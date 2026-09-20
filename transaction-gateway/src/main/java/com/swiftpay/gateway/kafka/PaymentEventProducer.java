@@ -22,13 +22,7 @@ public class PaymentEventProducer {
 
     public void publishPaymentInitiated(PaymentInitiatedEvent event) {
         try {
-            Message<PaymentInitiatedEvent> message = MessageBuilder
-                    .withPayload(event)
-                    .setHeader(KafkaHeaders.TOPIC, paymentInitiatedTopic)
-                    .setHeader(KafkaHeaders.MESSAGE_KEY, event.getTransactionId())
-                    .build();
-
-            kafkaTemplate.send(message);
+            kafkaTemplate.send(paymentInitiatedTopic, event.getTransactionId(), event);
             log.info("PaymentInitiatedEvent published: transactionId={}", event.getTransactionId());
         } catch (Exception e) {
             log.error("Failed to publish PaymentInitiatedEvent: transactionId={}", event.getTransactionId(), e);

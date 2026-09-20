@@ -91,8 +91,8 @@ services:
   # Transaction Gateway Service (Service A)
   transaction-gateway:
     build:
-      context: ./transaction-gateway
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: ./transaction-gateway/Dockerfile
     container_name: swiftpay-transaction-gateway
     depends_on:
       postgres:
@@ -124,8 +124,8 @@ services:
   # Ledger Service (Service B)
   ledger-service:
     build:
-      context: ./ledger-service
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: ./ledger-service/Dockerfile
     container_name: swiftpay-ledger-service
     depends_on:
       postgres:
@@ -155,8 +155,8 @@ services:
   # Analytics Worker Service (Service C)
   analytics-worker:
     build:
-      context: ./analytics-worker
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: ./analytics-worker/Dockerfile
     container_name: swiftpay-analytics-worker
     depends_on:
       postgres:

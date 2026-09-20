@@ -18,9 +18,8 @@ public class PaymentEventListener {
     private final LedgerService ledgerService;
 
     @RetryableTopic(
-            attempts = "4",
+            attempts = 4,
             backoff = @Backoff(delay = 1000, multiplier = 2.0, maxDelay = 10000),
-            autoCreateTopic = "true",
             topicSuffixingStrategy = TopicSuffixingStrategy.SUFFIX_WITH_INDEX_VALUE
     )
     @KafkaListener(topics = "${kafka.topics.payment-initiated}", groupId = "${spring.kafka.consumer.group-id}")

@@ -26,13 +26,7 @@ public class PaymentEventPublisher {
 
     public void publishPaymentCompleted(PaymentCompletedEvent event) {
         try {
-            Message<PaymentCompletedEvent> message = MessageBuilder
-                    .withPayload(event)
-                    .setHeader(KafkaHeaders.TOPIC, paymentCompletedTopic)
-                    .setHeader(KafkaHeaders.MESSAGE_KEY, event.getTransactionId())
-                    .build();
-
-            kafkaTemplate.send(message);
+            kafkaTemplate.send(paymentCompletedTopic, event.getTransactionId(), event);
             log.info("PaymentCompletedEvent published: transactionId={}", event.getTransactionId());
         } catch (Exception e) {
             log.error("Failed to publish PaymentCompletedEvent: transactionId={}", event.getTransactionId(), e);
@@ -41,13 +35,7 @@ public class PaymentEventPublisher {
 
     public void publishPaymentFailed(PaymentFailedEvent event) {
         try {
-            Message<PaymentFailedEvent> message = MessageBuilder
-                    .withPayload(event)
-                    .setHeader(KafkaHeaders.TOPIC, paymentFailedTopic)
-                    .setHeader(KafkaHeaders.MESSAGE_KEY, event.getTransactionId())
-                    .build();
-
-            kafkaTemplate.send(message);
+            kafkaTemplate.send(paymentFailedTopic, event.getTransactionId(), event);
             log.info("PaymentFailedEvent published: transactionId={}", event.getTransactionId());
         } catch (Exception e) {
             log.error("Failed to publish PaymentFailedEvent: transactionId={}", event.getTransactionId(), e);

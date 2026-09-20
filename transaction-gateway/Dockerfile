@@ -1,8 +1,20 @@
+# Build stage
+FROM eclipse-temurin:21-jdk-alpine AS builder
+
+WORKDIR /build
+
+# Copy entire project
+COPY . .
+
+RUN apk add --no-cache maven && \
+    mvn clean package -DskipTests
+
+# Runtime stage
 FROM eclipse-temurin:21-jre-alpine
 
 WORKDIR /app
 
-COPY target/transaction-gateway-1.0.0.jar app.jar
+COPY --from=builder /build/transaction-gateway/target/transaction-gateway-1.0.0.jar app.jar
 
 EXPOSE 8080
 
