@@ -4,7 +4,8 @@ import com.swiftpay.analytics.entity.PaymentAnalytics;
 import com.swiftpay.analytics.repository.PaymentAnalyticsRepository;
 import com.swiftpay.common.events.PaymentCompletedEvent;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.annotation.RetryableTopic;
 import org.springframework.kafka.retrytopic.TopicSuffixingStrategy;
@@ -13,15 +14,14 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-@Slf4j
 public class PaymentCompletedEventListener {
+    private static final Logger log = LoggerFactory.getLogger(PaymentCompletedEventListener.class);
 
     private final PaymentAnalyticsRepository analyticsRepository;
 
     @RetryableTopic(
             attempts = "3",
             backoff = @Backoff(delay = 1000, multiplier = 2.0, maxDelay = 10000),
-            autoCreateTopic = "true",
             topicSuffixingStrategy = TopicSuffixingStrategy.SUFFIX_WITH_INDEX_VALUE
     )
     @KafkaListener(topics = "${kafka.topics.payment-completed}", groupId = "${spring.kafka.consumer.group-id}")

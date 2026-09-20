@@ -3,10 +3,9 @@ package com.swiftpay.analytics.controller;
 import com.swiftpay.analytics.dto.AnalyticsMetrics;
 import com.swiftpay.analytics.service.AnalyticsService;
 import com.swiftpay.common.dto.ApiResponse;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,9 +15,8 @@ import java.time.format.DateTimeFormatter;
 @RestController
 @RequestMapping("/v1/analytics")
 @RequiredArgsConstructor
-@Slf4j
-@Tag(name = "Analytics", description = "Analytics and metrics endpoints")
 public class AnalyticsController {
+    private static final Logger log = LoggerFactory.getLogger(AnalyticsController.class);
 
     private final AnalyticsService analyticsService;
     private static final DateTimeFormatter dateFormatter = DateTimeFormatter.ISO_DATE_TIME;
