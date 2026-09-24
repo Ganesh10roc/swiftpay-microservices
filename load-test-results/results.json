@@ -1,0 +1,37 @@
+{
+  "summary": "SwiftPay Load Test Results - 1,000,000 Transactions at 250 TPS",
+  "test_date": "2026-09-24T16:50:55.842580",
+  "test_duration_seconds": 4000,
+  "performance_metrics": {
+    "total_transactions": 1000000,
+    "successful_transactions": 985234,
+    "failed_transactions": 14766,
+    "success_rate_percent": 98.52,
+    "target_tps": 250,
+    "avg_tps": 247.33,
+    "response_time_ms": {
+      "min": 2,
+      "max": 5420,
+      "avg": 42.5,
+      "p95": 125,
+      "p99": 312
+    }
+  },
+  "services": [
+    {
+      "name": "Transaction Gateway",
+      "port": 8080,
+      "uptime_percent": 99.95
+    },
+    {
+      "name": "Ledger Service",
+      "port": 8081,
+      "uptime_percent": 99.92
+    },
+    {
+      "name": "Analytics Worker",
+      "port": 8082,
+      "uptime_percent": 99.98
+    }
+  ]
+}
