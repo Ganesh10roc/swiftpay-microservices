@@ -46,6 +46,9 @@ spring:
     serialization:
       write-dates-as-timestamps: false
 
+  liquibase:
+    enabled: false
+
 kafka:
   topics:
     payment-initiated: payment-initiated

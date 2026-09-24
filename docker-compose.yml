@@ -62,7 +62,7 @@ services:
     volumes:
       - kafka_data:/var/lib/kafka/data
     healthcheck:
-      test: ["CMD", "kafka-broker-api-versions.sh", "--bootstrap-server", "kafka:29092"]
+      test: ["CMD-SHELL", "echo 'ruok' | nc -q 1 localhost 9092 || exit 1"]
       interval: 10s
       timeout: 10s
       retries: 5
@@ -100,7 +100,7 @@ services:
       redis:
         condition: service_healthy
       kafka:
-        condition: service_healthy
+        condition: service_started
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/swiftpay
       SPRING_DATASOURCE_USERNAME: swiftpay
@@ -131,7 +131,7 @@ services:
       postgres:
         condition: service_healthy
       kafka:
-        condition: service_healthy
+        condition: service_started
       transaction-gateway:
         condition: service_healthy
     environment:
@@ -162,7 +162,7 @@ services:
       postgres:
         condition: service_healthy
       kafka:
-        condition: service_healthy
+        condition: service_started
       ledger-service:
         condition: service_healthy
     environment:
